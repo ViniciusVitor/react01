@@ -12,7 +12,7 @@ class Inicio extends Component {
         super (props)
 
         this.state = {
-            usuario: {}, 
+            usuario: '', 
             estaLogado: false
         }
 
@@ -28,9 +28,9 @@ class Inicio extends Component {
                 localStorage.setItem('foto', usuario.photoURL)
             }else{
                 console.log('Nao Logou')
-                this.state({
+                this.state = {
                     estaLogado:false
-                })
+                }
 
             }
         })

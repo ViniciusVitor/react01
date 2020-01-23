@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {Link} from 'react-router-dom'
-import { Menu, Image, Dropdown, DropdownItem } from 'semantic-ui-react';
+import { Menu, Image, Dropdown, DropdownItem, MenuItem, Icon } from 'semantic-ui-react';
 import { render } from '@testing-library/react';
 import firebase from 'firebase'
 
@@ -8,7 +8,8 @@ class Header extends Component{
     constructor(props){
         super(props)
         this.state = {
-            usuario:''
+            usuario:'',
+            estaLogado: false
         }
     }
     componentDidMount(){
@@ -18,7 +19,8 @@ class Header extends Component{
 
         }
         this.setState({
-            usuario: usuarioLogado
+            usuario: usuarioLogado,
+            estaLogado: !!localStorage.getItem('nome')            
         })
     }
 
@@ -30,7 +32,8 @@ class Header extends Component{
             localStorage.removeItem('nome')
             localStorage.removeItem('foto')
             this.setState({
-                usuario:''
+                usuario:'',
+                estaLogado: false
             })
         }) 
         .catch(() =>{
@@ -58,13 +61,29 @@ class Header extends Component{
                     <Menu.Item as =  {Link} to='/Ranking'>Raking</Menu.Item>
 
                     <Menu.Menu position='right'>
-                        <Menu.Item><Image avatar src={foto} /></Menu.Item>
-                        <Dropdown item text={nome}>
-                        <Dropdown.Menu>
-                            <DropdownItem onClick={this.deslogarUsuario}>Sair</DropdownItem>
+                        {
+                            this.state.estaLogado &&
+                            <Menu.Item><Image avatar src={foto} /></Menu.Item> 
+                        }
+                        {                                
+                                this.state.estaLogado &&
+                                <Dropdown item text={nome}>
+                                <Dropdown.Menu>
+                                    <DropdownItem onClick={this.deslogarUsuario}>Sair</DropdownItem>
+                                    
+                                </Dropdown.Menu> 
+                                </Dropdown>
+                        }
                             
-                        </Dropdown.Menu> 
-                        </Dropdown>                   
+        
+                        
+                        {                       
+                            !this.state.estaLogado &&
+                            <MenuItem><Icon name='user'/></MenuItem>
+                            
+                        }
+
+
                     </Menu.Menu>
                     
                 </Menu>

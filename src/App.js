@@ -17,7 +17,7 @@ function App() {
         
         <Route path='/' exact component={Inicio} />
         <Route path='/Categorias' component={Categorias}/>
-        <Route path='/Perguntas' component={Perguntas} />
+        <Route path='/Perguntas/:nome' component={Perguntas} />
         <Route path='/Resultado' component={Resultado}/>
         <Route path='/Ranking' component={Raking}/>
       </div>
